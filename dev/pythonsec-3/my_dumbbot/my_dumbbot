@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+
+import argparse
+import logging
+import csv
+import sys
+
+from selenium                           import webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.common.by       import By
+from webdriver_manager.firefox          import GeckoDriverManager
+
+def init_logging() -> None:
+    """
+    Initialize the logging system
+    """
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
+
+def parse_arguments() -> argparse.Namespace:
+    """
+    Parse the arguments passed to the script
+    """
+    parser = argparse.ArgumentParser(description='My dumb bot')
+    parser.add_argument('-u', '--URL',     required=False, default="http://localhost:5000")
+    parser.add_argument('-p', '--CSVFILE', required=True)
+
+    return parser.parse_args()
+
+def read_csv(filename: str) -> list:
+    """
+    Read the CSV file and return a dict
+    """
+    persons = list()
+
+    with open(filename, newline='') as csvfile:
+        spamreader = csv.DictReader(csvfile, delimiter=';', quotechar='"')
+
+        for row in spamreader:
+            persons.append(row)
+
+    return persons
+
+def init_driver() -> webdriver:
+    """
+    Initialize the selenium webdriver
+    """
+    logging.info("Initializing driver")
+    driver = webdriver.Firefox(
+        service=FirefoxService(
+            GeckoDriverManager().install()
+        )
+    )
+    driver.implicitly_wait(5)
+
+    return driver
+
+def driver_get(driver: webdriver, url: str) -> None:
+    """
+    Wrapper for driver.get()
+    """
+    try:
+        logging.info(f"Accessing {url}")
+        driver.get(url)
+    except Exception as e:
+        logging.error(f"Error while accessing {url} : {e}")
+
+def fill_website(driver: webdriver, url: str, persons: list) -> None:
+    """
+    Auto-fill provided website with data in struct
+    """
+    driver_get(driver, url)
+
+    # Fill those
+    for count, person in enumerate(persons):
+        logging.info(f"Filling user N°{count + 1}/{len(persons)}")
+
+        # Get the elements
+        name     = driver.find_element(By.XPATH, '//*[@id="name"]')
+        lastname = driver.find_element(By.XPATH, '//*[@id="lastname"]')
+        login    = driver.find_element(By.XPATH, '//*[@id="login"]')
+        desc     = driver.find_element(By.XPATH, '//*[@id="desc"]')
+
+        validate = driver.find_element(By.XPATH, '/html/body/form/button')
+
+        # Fill data
+        name.send_keys(person['name'])
+        lastname.send_keys(person['lastname'])
+        login.send_keys(person['login'])
+        desc.send_keys(person['desc'])
+
+        # Submit
+        validate.click()
+
+        route = driver.current_url.split("/")[-1]
+
+        if route == "list_user":
+            driver_get(driver, url)
+
+def main():
+    init_logging()
+    args = parse_arguments()
+
+    driver = init_driver()
+
+    url = args.URL
+    persons = read_csv(args.CSVFILE)
+
+    try:
+        fill_website(driver, url, persons)
+    except Exception as e:
+        logging.error(f"Error while filling website : {e}")
+    finally:
+        driver.close()
+
+if __name__ == '__main__':
+    main()

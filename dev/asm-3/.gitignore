@@ -1,0 +1,18 @@
+# C generated information
+*.d
+*.o
+*.obj
+*.elf
+*.a
+*.so
+*.out
+*.exe
+*.bin
+
+# Python
+__pycache__
+.mypy_cache/
+
+# Other
+*.txt
+.vscode

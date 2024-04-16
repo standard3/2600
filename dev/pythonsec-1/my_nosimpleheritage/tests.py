@@ -1,0 +1,67 @@
+import my_nosimpleheritage as my
+
+print("humain")
+humain = my.Humain()
+print(humain.__dict__)
+print(humain.move_to(1, 1, 0, 'terre'))
+print(humain.__dict__)
+
+print("volant")
+volant = my.Volant()
+print(volant.__dict__)
+print(volant.move_to(1, 2, 1, 'terre'))
+print(volant.__dict__)
+
+print("courant")
+courant = my.Courant()
+print(courant.__dict__)
+print(courant.move_to(1, 2, 0, 'terre'))
+print(courant.__dict__)
+
+print("roulant")
+roulant = my.Roulant()
+print(roulant.__dict__)
+print(roulant.move_to(1, 2, 0, 'terre'))
+print(roulant.__dict__)
+
+print("marchant")
+marchant = my.Marchant()
+print(marchant.__dict__)
+print(marchant.move_to(1, 2, 0, 'terre'))
+print(marchant.__dict__)
+
+print("flottant")
+flottant = my.Flottant()
+print(flottant.__dict__)
+print(flottant.move_to(1, 2, 0, 'mer'))
+print(flottant.__dict__)
+
+print("nageant")
+nageant = my.Nageant()
+print(nageant.__dict__)
+print(nageant.move_to(1, 2, -1, 'mer'))
+print(nageant.__dict__)
+
+print("voiture sans permis")
+voiture_sans_permis = my.VoitureSansPermis()
+print(voiture_sans_permis.__dict__)
+print(voiture_sans_permis.move_to(1, 2, 0, 'terre'))
+print(voiture_sans_permis.__dict__)
+
+print("berline")
+berline = my.Berline()
+print(berline.__dict__)
+print(berline.move_to(1, 2, 0, 'terre'))
+print(berline.__dict__)
+
+print("cygne")
+cygne = my.Cygne()
+print(cygne.__dict__)
+print(cygne.move_to(1, 1, 2, 'terre'))
+print(cygne.__dict__)
+
+print("canard")
+canard = my.Canard()
+print(canard.__dict__)
+print(canard.move_to(1, 1, 2, 'terre'))
+print(canard.__dict__)

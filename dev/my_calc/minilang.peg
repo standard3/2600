@@ -1,0 +1,47 @@
+# v1
+ADD <- SPACE_OR_COMMENT '+"
+
+SPACE_OR_COMMENT <- "//" [^\n]* '\n' / [ \t\r\n]+
+Expr             <- Sum
+Sum              <- Product (('+' / '-') Product)*
+Product          <- Power (('*' / '/') Power)*
+Power            <- Value ('^' Power)?
+Value            <- Variable / Number / '(' Expr ')'
+Variable         <- [a-zA-Z_]+ '=' Expr / [a-zA-Z]+
+Number           <- [0-9]+
+SPACE_OR_COMMENT <- '//' [^\n]* '\n' / [ \t\r\n]+
+
+
+#############################
+# potential v2
+# Numeric
+# ---------------
+
+# Int
+Int               <- [0-9]+
+
+# Float
+Dec               <- Int '.' Int?
+Frac              <- '.' Int
+Exp               <- ('e' / 'E') ('-' / '+')? Int
+Float             <- ('-' / '+')* (Dec / Frac) Exp?
+
+Numeric           <-  Int / Float
+
+# Expression
+# ---------------
+Expr              <-  Term (NonPrioritaryOp Term)*
+Term              <-  Factor (PrioritaryOp Factor)*
+Factor            <-  UnaryOp? (Numeric / '(' Expr ')')
+UnaryOp           <-  '--' / '++'
+NonPrioritaryOp   <-  '+' / '-'
+PrioritaryOp      <-  '*' / '/' / '%' / '^'
+
+# Variable
+-----------------
+
+
+# Generic
+# ---------------
+EOL               <- ';'
+Statement         <-  Expr EOL

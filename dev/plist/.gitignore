@@ -1,0 +1,8 @@
+# Editor workspaces
+.vs*
+
+# Build files
+*.o
+*.exe
+*.out
+*.d

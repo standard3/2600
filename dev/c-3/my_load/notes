@@ -1,0 +1,131 @@
+Note : Tout est formatté en big endian
+
+sizeof(enum item_type)    = 4 bytes
+sizeof(struct item_staff) = 152 bytes
+sizeof(struct item_stuff) = 112 bytes
+sizeof(union item_union)  = 152 bytes
+sizeof(struct item)       = 160 bytes
+sizeof(struct item_list)  = 16 bytes
+sizeof(struct tm)         = 56 bytes
+------------------------------------
+alignof(enum item_type)    = 4 bytes
+alignof(struct item_staff) = 8 bytes
+alignof(struct item_stuff) = 8 bytes
+alignof(union item_union)  = 8 bytes
+alignof(struct item)       = 8 bytes
+alignof(struct item_list)  = 8 bytes
+------------------------------------
+char        = 1 bytes
+short       = 2 bytes
+int         = 4 bytes
+long        = 8 bytes
+long long   = 8 bytes
+float       = 4 bytes
+double      = 8 bytes
+long double = 16 bytes
+
+-------------------------------------------------------------------------
+
+Magic Byte :
+
+> hexdump -n 20 -C ./test_load.ilist
+00000000  49 74 65 6d 4c 69 73 74  20 76 31 2e 30 00 00 00  |ItemList v1.0...|
+00000010  00 00 00 00                                       |....|
+00000014
+
+------------------------------------
+
+Nombre objets :
+
+> hexdump -s 20 -n 4 -C ./test_load.ilist
+00000014  07 00 00 00 00 00 00 00                           |........|
+0000001c
+
+------------------------------------
+
+début struct item
+
+enum item_type :
+
+> hexdump -C -s 24 -n 4 test_load.ilist
+00000018  00 00 00 00                                       |....|
+0000001c
+
+    début structure item_staff
+
+        char name[20] :
+        > hexdump -C -s 28 -n 20 test_load.ilist
+        0000001c  74 65 73 74 6f 75 69 6c  6c 65 00 00 00 00 00 00  |testouille......|
+        0000002c  00 00 00 00                                       |....|
+        00000030
+
+        char lastname[20] :
+        > hexdump -C -s 48 -n 20 test_load.ilist
+        00000030  74 65 73 74 61 6e 74 00  00 00 00 00 00 00 00 00  |testant.........|
+        00000040  00 00 00 00                                       |....|
+        00000044
+
+        struct tm birth :
+        > hexdump -C -s 68 -n 56 test_load.ilist
+        00000044  00 00 00 00 00 00 00 00  00 00 00 00 0f 00 00 00  |................|
+        00000054  0a 00 00 00 4e 00 00 00  03 00 00 00 3e 01 00 00  |....N.......>...|
+        00000064  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+        00000074  00 00 00 00 00 00 00 00                           |........|
+        0000007c
+
+        struct tm begin_job : 
+        > hexdump -C -s 124 -n 56 test_load.ilist
+        0000007c  00 00 00 00 00 00 00 00  00 00 00 00 02 00 00 00  |................|
+        0000008c  07 00 00 00 77 00 00 00  05 00 00 00 d5 00 00 00  |....w...........|
+        0000009c  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+        000000ac  00 00 00 00 00 00 00 00                           |........|
+        000000b4
+
+début structure item
+
+enum item_type :
+
+> hexdump -C -s 180 -n 4 test_load.ilist
+000000b4  01 00 00 00                                       |....|
+000000b8
+
+    début structure item_stuff
+
+        int id :
+        > hexdump -C -s 184 -n 4 test_load.ilist
+        000000b8  01 00 00 00                                       |....|
+        000000bc
+
+        char title[20] :
+        > hexdump -C -s 188 -n 20 test_load.ilist
+        000000bc  48 61 63 6b 20 76 69 62  72 6f 00 00 00 00 00 00  |Hack vibro......|
+        000000cc  00 00 00 00                                       |....|
+        000000d0
+
+        char desc[50] :
+        > hexdump -C -s 208 -n 50 test_load.ilist
+        000000d0  49 4f 54 20 68 61 63 6b  61 6e 74 20 6c 65 73 20  |IOT hackant les |
+        000000e0  76 69 62 72 6f 73 20 63  6f 6e 6e 65 63 74 c3 a9  |vibros connect..|
+        000000f0  73 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |s...............|
+        00000100  00 00                                             |..|
+        00000102
+
+        double height :
+        > hexdump -C -s 258 -n 8 test_load.ilist
+        00000102  00 00 00 00 00 00 33 33                           |......33|
+        0000010a
+
+        double width :
+        > hexdump -C -s 266 -n 8 test_load.ilist
+        0000010a  33 33 33 b3 33 40 00 00                           |333.3@..|
+        00000112
+
+        double depth :
+        > hexdump -C -s 274 -n 8 test_load.ilist
+        00000112  00 00 00 00 26 40 00 00                           |....&@..|
+        0000011a
+
+        double weight :
+        > hexdump -C -s 282 -n 8 test_load.ilist
+        0000011a  00 00 00 00 12 40 00 00                           |.....@..|
+        00000122

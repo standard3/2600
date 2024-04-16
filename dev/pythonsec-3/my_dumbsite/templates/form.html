@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un utilisateur</title>
+</head>
+<body>
+    <h2>Ajouter un utilisateur</h2>
+    <form method="POST" action="{{ url_for('add_user') }}">
+        {{ form.csrf_token }}
+        <label for="name">Nom:</label>
+        {{ form.name(class="form-control", id="name") }}
+        
+        <label for="lastname">Prénom:</label>
+        {{ form.lastname(class="form-control", id="lastname") }}
+        
+        <label for="login">Login:</label>
+        {{ form.login(class="form-control", id="login") }}
+        
+        <label for="desc">Description:</label>
+        {{ form.desc(class="form-control", id="desc") }}
+        
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>

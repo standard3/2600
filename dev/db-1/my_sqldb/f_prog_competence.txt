@@ -1,0 +1,42 @@
+
+ORC - BARBN - 10
+====================
+  level  comp_key_name      value    cp_by_use
+-------  ---------------  -------  -----------
+     10  AXE                   28            1
+     10  BOW                   21            2
+     10  CUIR                  28            1
+     10  DAG                   16            2
+     10  MOVE                  26            2
+     10  STR                   35            1
+     10  SWIM                   8            5
+     10  SWORD                 18            1
+HIELF - WIZ - 10
+====================
+  level  comp_key_name      value    cp_by_use
+-------  ---------------  -------  -----------
+     10  BATON                 12            1
+     10  BOW                   28            1
+     10  DAG                   13            2
+     10  MOVE                  27            1
+     10  SPELL                 30            1
+     10  STR                   23            2
+     10  SWIM                  21            1
+     10  WAND                  42            1
+DWARF - WARIO - 10
+====================
+  level  comp_key_name      value    cp_by_use
+-------  ---------------  -------  -----------
+     10  AXE                   35            1
+     10  BOW                   19            2
+     10  CHMAL                 19            1
+     10  DAG                   18            2
+     10  MASS                  18            2
+     10  MOVE                  13            2
+     10  PLATE                 26            1
+     10  SABER                 24            2
+     10  SHLD                  28            1
+     10  STR                   29            1
+     10  SWIM                   8            5
+     10  SWORD                 24            1
+     10  XBOW                  26            1
